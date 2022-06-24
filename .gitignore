@@ -15,3 +15,6 @@ Cargo.lock
 
 # atcoder testcases
 testcases/
+
+# vscode setting
+.vscode/
