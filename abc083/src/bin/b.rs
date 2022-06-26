@@ -17,7 +17,7 @@ fn main() {
             sum += num;
         }
         if a <= sum && sum <= b {
-            ans += 1;
+            ans += i;
         }
     }
     println!("{}", ans);
