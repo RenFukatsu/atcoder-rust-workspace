@@ -20,7 +20,7 @@ fn main() {
     }
 }
 
-fn is_correct(s: &String) -> bool {
+fn is_correct(s: &str) -> bool {
     let mut x = 0;
     for c in s.chars() {
         if c == '(' {
