@@ -15,13 +15,14 @@ fn main() {
         let research = &revs[i..std::cmp::min(revs.len(), i+7)];
         let prei = i;
         for r in &revdre {
-            if research.contains(r) {
+            if research.chars().nth(0) == r.chars().nth(0) && research.contains(r) {
                 i += r.len();
+                eprintln!("{}", r.chars().into_iter().rev().collect::<String>());
             }
         }
         if prei == i {
             ans = "NO";
-            i += 1;
+            break;
         }
         if i >= revs.len() {
             break;
