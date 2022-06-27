@@ -7,11 +7,11 @@ fn main() {
 
     for i in 0..1<<n {
         let mut s = String::new();
-        for j in 0..n {
+        for j in (0..n).rev() {
             if i & (1 << j) == 0 {
-                s.push(')');
-            } else {
                 s.push('(');
+            } else {
+                s.push(')');
             }
         }
         if is_correct(&s) {
