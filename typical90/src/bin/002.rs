@@ -4,29 +4,36 @@ fn main() {
     input! {
         n: i32,
     }
-    let mut ans = Vec::<String>::new();
-    if n % 2 == 0 {
-        search(0, &n, 0, String::from(""), &mut ans);
-    }
-    for a in ans {
-        println!("{}", a);
+
+    for i in 0..1<<n {
+        let mut s = String::new();
+        for j in 0..n {
+            if i & (1 << j) == 0 {
+                s.push(')');
+            } else {
+                s.push('(');
+            }
+        }
+        if is_correct(&s) {
+            println!("{}", s);
+        }
     }
 }
 
-fn search(i: i32, n: &i32, left: i32, s: String, ans: &mut Vec::<String>) {
-    if i == *n {
-        ans.push(s);
-        return;
+fn is_correct(s: &String) -> bool {
+    let mut x = 0;
+    for c in s.chars() {
+        if c == '(' {
+            x += 1;
+        } else {
+            x -= 1;
+        }
+        if x < 0 {
+            return false;
+        }
     }
-
-    if left != *n - i {
-        let mut sc = s.clone();
-        sc.push('(');
-        search(i + 1, n, left + 1, sc, ans);
+    if x != 0 {
+        return false;
     }
-    if left > 0 {
-        let mut sc = s.clone();
-        sc.push(')');
-        search(i + 1, n, left - 1, sc, ans);
-    }
+    true
 }
