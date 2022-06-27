@@ -17,7 +17,6 @@ fn main() {
         for r in &revdre {
             if research.chars().next() == r.chars().next() && research.contains(r) {
                 i += r.len();
-                eprintln!("{}", r.chars().into_iter().rev().collect::<String>());
             }
         }
         if prei == i {
