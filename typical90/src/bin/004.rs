@@ -8,19 +8,19 @@ fn main() {
     }
     let mut sum_row = vec![0_usize; h];
     let mut sum_col = vec![0_usize; w];
-    for i in 0..h {
-        for j in 0..w {
-            sum_row[i] += mp[i][j];
-            sum_col[j] += mp[i][j];
+    for (i, sr) in sum_row.iter_mut().enumerate() {
+        for (j, sc) in sum_col.iter_mut().enumerate() {
+            *sr += mp[i][j];
+            *sc += mp[i][j];
         }
     }
 
-    for i in 0..h {
-        for j in 0..w {
+    for (i, sr) in sum_row.iter_mut().enumerate() {
+        for (j, sc) in sum_col.iter_mut().enumerate() {
             if j != 0 {
                 print!(" ");
             }
-            print!("{}", sum_row[i] + sum_col[j] - mp[i][j]);
+            print!("{}", *sr + *sc - mp[i][j]);
         }
         println!();
     }
