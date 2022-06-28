@@ -1,3 +1,5 @@
+use std::collections::VecDeque;
+
 use proconio::input;
 
 fn main() {
@@ -12,26 +14,35 @@ fn main() {
         mp[a].push(b);
         mp[b].push(a);
     }
-    let mut ans = 0;
-    search(0, 0, &mp, &mut ans);
-    println!("{}", ans + 1);
+    let (node, _) = calc_dist(0, &mp);
+    let (_, dist) = calc_dist(node, &mp);
+    println!("{}", dist + 1);
 }
 
-fn search(pre: usize, now: usize, mp: &Vec<Vec<usize>>, ans: &mut i32) -> i32 {
-    let mut mlen = 0;
-    let mut m2len = 0;
-    for next in &mp[now] {
-        if pre == *next {
-            continue;
+fn calc_dist(p: usize, mp: &[Vec<usize>]) -> (usize, usize) {
+    let mut que = VecDeque::new();
+    que.push_back((p, p, 0_usize));
+    let (mut point, mut dist) = (0_usize, 0_usize);
+    while !que.is_empty() {
+        let (mut pre, mut node, mut len) = (0_usize, 0_usize, 0_usize);
+        match que.pop_front() {
+            None => eprintln!("cannot pop queue"),
+            Some((a, b, c)) => {
+                pre = a;
+                node = b;
+                len = c;
+            },
         }
-        let len = search(now, *next, mp, ans);
-        if len > mlen {
-            m2len = mlen;
-            mlen = len;
-        } else if len > m2len {
-            m2len = len;
+        if dist < len {
+            dist = len;
+            point = node;
+        }
+        for next in &mp[node] {
+            if pre == *next {
+                continue;
+            }
+            que.push_back((node, *next, len + 1));
         }
     }
-    *ans = std::cmp::max(*ans, mlen + m2len);
-    mlen + 1
+    (point, dist)
 }
