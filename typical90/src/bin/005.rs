@@ -1,6 +1,5 @@
 use proconio::input;
 
-// 1点解法
 fn main() {
     input! {
         n: usize,
