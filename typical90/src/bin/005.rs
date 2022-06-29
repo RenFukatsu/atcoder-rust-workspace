@@ -1,42 +1,29 @@
 use proconio::input;
 
+const MOD: u32 = 1000000007;
+
 fn main() {
     input! {
         n: usize,
         b: usize,
         k: usize,
-        c: [usize; k],
+        cs: [usize; k],
     }
-    let mut contain = [false; 10];
-    for val in c {
-        contain[val] = true;
+    let mut rems = vec![0; b];
+    for c in &cs {
+        rems[c % b] += 1;
     }
-    let contain = contain;
-    // eprintln!("contain = {:?}", contain);
-    let modulo: usize = 1000000007;
-    let mut ans = 0;
-    let mut num = b;
-    while num.to_string().len() < n {
-        num += b;
-    }
-    while num.to_string().len() < n + 1 {
-        let mut div = 1;
-        for _ in 1..num.to_string().len() {
-            div *= 10;
-        }
-        let mut ok = true;
-        while div > 0 {
-            let i = num % (div * 10) / div;
-            if !contain[i] {
-                ok = false;
+    for _ in 0..n-1 {
+        let mut nrems = vec![0; b];
+        for (i, rem) in rems.iter().enumerate() {
+            for c in &cs {
+                let idx = (i * 10 + c) % b;
+                nrems[idx] += *rem;
+                nrems[idx] %= MOD;
             }
-            div /= 10;
         }
-        // eprintln!("num = {}, div = {}, ok = {}", num, div, ok);
-        if ok {
-            ans += 1;
-        }
-        num += b;
+        rems = nrems;
+        // eprintln!("{:?}", rems);
     }
-    println!("{}", ans % modulo);
+    println!("{}", rems[0]);
 }
